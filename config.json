@@ -4,7 +4,13 @@
     "database": "quant",
     "user": "quant",
     "password": "quant",
-    "table": "binance_trades_tick"
-  }
+    "table": "okx_trades_tick"
+  },
+  "settings": {
+    "max_batch_size": 2000,
+    "flush_interval_sec": 3
+  },
+  "instruments": [
+    "PIEVERSE-USDT-SWAP"
+  ]
 }
-

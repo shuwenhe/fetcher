@@ -1,17 +1,30 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -O2 -Wall
-# The order of libraries matters for the linker
 LIBS = -lclickhouse-cpp-lib -lcurl -lzstd -llz4 -lcityhash -lpthread
 
-TARGET = binance
-SRC = binance.cpp
-OBJ = binance.o
+# 可执行文件
+TARGETS = binance tushare
 
-$(TARGET): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJ) $(LIBS)
+# 默认目标
+all: $(TARGETS)
 
-$(OBJ): $(SRC)
-	$(CXX) $(CXXFLAGS) -c $(SRC) -o $(OBJ)
+# binance 可执行文件
+binance: binance.o
+	$(CXX) $(CXXFLAGS) -o $@ binance.o $(LIBS)
 
+# tushare 可执行文件
+tushare: tushare.o
+	$(CXX) $(CXXFLAGS) -o $@ tushare.o $(LIBS)
+
+# 单独编译 binance.cpp
+binance.o: binance.cpp
+	$(CXX) $(CXXFLAGS) -c binance.cpp -o binance.o
+
+# 单独编译 tushare.cc
+tushare.o: tushare.cc
+	$(CXX) $(CXXFLAGS) -c tushare.cc -o tushare.o
+
+# 清理
 clean:
-	rm -f $(TARGET) $(OBJ)
+	rm -f $(TARGETS) *.o
+
